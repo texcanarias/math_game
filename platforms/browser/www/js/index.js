@@ -4,14 +4,15 @@ var app = {
         alto = document.documentElement.clientHeight;
         ancho = document.documentElement.clientWidth;
 
+        var sndOK = new Media("res/media/OK.mp3", null);
+        var sndKO = new Media("res/media/KO.mp3", null);
+
         esperandoResultado = false; //indica si la aplicacion espera a que el usuario meta el resultado
         PosicionDerecha = 0;
         Aciertos = 0;
         Record = 0;
-        sndOK = null;
-        sndKO = null;
 
-        numerosAdmitidos = [1, 2, 3, 5, 10];
+        numerosAdmitidos = [1, 2, 3,4, 5, 10];
         numerosTotalesAdmitidos = numerosAdmitidos.length;
 
 
@@ -92,6 +93,7 @@ var app = {
 
     acierto: function () {
         //document.getElementById('sndOK').play().then(function(){});
+        sndOK.play();
 
         var txtAciertos = document.getElementById('aciertos');
         var txtRecord = document.getElementById('record');
@@ -107,6 +109,8 @@ var app = {
     },
 
     error: function () {
+        sndKO.play();
+        
         /*document.getElementById('sndKO').play().then(function() {*/
             alert('¡Has fallado! Tienes '+Aciertos+' respuestas correctas.');
             if(Aciertos == Record){
