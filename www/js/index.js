@@ -4,15 +4,15 @@ var app = {
         alto = document.documentElement.clientHeight;
         ancho = document.documentElement.clientWidth;
 
-        var sndOK = new Media(getMediaURL("res/media/OK.mp3"), null);
-        var sndKO = new Media(getMediaURL("res/media/KO.mp3"), null);
+        sndOK = new Media(getMediaURL("res/media/OK.mp3"), null, mediaError);
+        sndKO = new Media(getMediaURL("res/media/KO.mp3"), null, mediaError);
 
         esperandoResultado = false; //indica si la aplicacion espera a que el usuario meta el resultado
         PosicionDerecha = 0;
         Aciertos = 0;
         Record = 0;
 
-        numerosAdmitidos = [1, 2, 3,4, 5, 10];
+        numerosAdmitidos = [1, 2, 3, 4, 5, 10];
         numerosTotalesAdmitidos = numerosAdmitidos.length;
 
 
@@ -21,9 +21,14 @@ var app = {
         this.update();
 
         function getMediaURL(s) {
-           if(device.platform.toLowerCase() === "android") 
-            return "/android_asset/www/" + s;
-           return s;
+            if (device.platform.toLowerCase() === "android")
+                return "/android_asset/www/" + s;
+            return s;
+        }
+
+        function mediaError(e) {
+            alert('Media Error');
+            alert(JSON.stringify(e));
         }
     },
     //Iniciar fastclick para acelerar la interactividad
@@ -97,7 +102,6 @@ var app = {
     },
 
     acierto: function () {
-        //document.getElementById('sndOK').play().then(function(){});
         sndOK.play();
 
         var txtAciertos = document.getElementById('aciertos');
@@ -115,26 +119,27 @@ var app = {
 
     error: function () {
         sndKO.play();
-        
-        /*document.getElementById('sndKO').play().then(function() {*/
-            alert('¡Has fallado! Tienes '+Aciertos+' respuestas correctas.');
-            if(Aciertos == Record){
-                alert('Has conseguido un nuevo record.');
-            }
-        /*});*/
+
+        alert('¡Has fallado! Tienes ' + Aciertos + ' respuestas correctas.');
+        if (Aciertos == Record) {
+            alert('Has conseguido un nuevo record.');
+        }
 
         Aciertos = 0;
 
         var txtAciertos = document.getElementById('aciertos');
         txtAciertos.innerHTML = Aciertos;
 
-        this.update();        
+        this.update();
     }
 
 };
 
 if ('addEventListener' in document) {
-    document.addEventListener('DOMContentLoaded', function () {
-        app.initialize();
-    }, false);
+    document.addEventListener("deviceready", onDeviceReady, false);
+    function onDeviceReady() {
+        //document.addEventListener('DOMContentLoaded', function () {
+            app.initialize();
+        //}, false);
+    }
 }
