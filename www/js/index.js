@@ -4,8 +4,8 @@ var app = {
         alto = document.documentElement.clientHeight;
         ancho = document.documentElement.clientWidth;
 
-        sndOK = new Media(getMediaURL("res/media/OK.mp3"), null, mediaError);
-        sndKO = new Media(getMediaURL("res/media/KO.mp3"), null, mediaError);
+        /*sndOK = new Media(getMediaURL("res/media/OK.mp3"), null, mediaError);
+        sndKO = new Media(getMediaURL("res/media/KO.mp3"), null, mediaError);*/
 
         esperandoResultado = false; //indica si la aplicacion espera a que el usuario meta el resultado
         PosicionDerecha = 0;
@@ -103,7 +103,7 @@ var app = {
     },
 
     acierto: function () {
-        sndOK.play();
+        //sndOK.play();
 
         var txtAciertos = document.getElementById('aciertos');
         var txtRecord = document.getElementById('record');
@@ -119,7 +119,7 @@ var app = {
     },
 
     error: function () {
-        sndKO.play();
+        //sndKO.play();
 
         alert('¡Has fallado! Tienes ' + Aciertos + ' respuestas correctas.');
         if (Aciertos == Record) {
