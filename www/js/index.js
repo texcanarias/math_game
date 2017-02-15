@@ -22,7 +22,8 @@ var app = {
 
         function getMediaURL(s) {
             if (device.platform.toLowerCase() === "android")
-                return "/android_asset/www/" + s;
+                s = "/android_asset/www/" + s;
+            alert(s);
             return s;
         }
 
